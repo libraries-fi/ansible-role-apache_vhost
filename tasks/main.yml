@@ -1,0 +1,12 @@
+---
+    - name: Apache config for site
+      template: src={{vhost_template}} dest=/etc/apache2/sites-available/{{site_name}} owner=root group=root mode=0644
+    - name: Enable site in apache config
+      file: src=/etc/apache2/sites-available/{{ site_name }} dest=/etc/apache2/sites-enabled/{{ site_name }} owner=root group=root state=link
+
+
+    - name: Create site directory if it does not exist.
+      file: state=directory path={{ site_webroot }} owner=root group=root mode=0755
+
+    - name: Copy a robots.txt
+      template: src={{ robots_txt }} dest={{ site_webroot }}/robots.txt owner=root group=root mode=0644
