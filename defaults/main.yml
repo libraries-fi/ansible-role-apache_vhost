@@ -1,3 +1,1 @@
 ---
-robots_txt: disallow_robots.txt.j2
-vhost_template: default.j2
