@@ -1,19 +1,15 @@
 ---
     - name: Create site directory if it does not exist.
-      file: state=directory path={{ item.site_webroot }} owner=root group=root mode=0755
-      with_items: vhost_sites
+      file: state=directory path={{ apache_vhost_webroot }} owner=root group=root mode=0755
 
     - name: Copy a robots.txt
-      template: src={{ item.robots_txt }} dest={{ item.site_webroot }}/robots.txt owner=root group=root mode=0644
-      with_items: vhost_sites
-      when: item.robots_txt is defined
+      template: src={{ apache_vhost_robots_txt }} dest={{ apache_vhost_webroot }}/robots.txt owner=root group=root mode=0644
+      when: robots_txt is defined
 
     - name: Apache config for site
-      template: src={{item.vhost_template}} dest=/etc/apache2/sites-available/{{item.site_name}} owner=root group=root mode=0644
-      with_items: vhost_sites
+      template: src={{vhost_template}} dest=/etc/apache2/sites-available/{{site_name}} owner=root group=root mode=0644
 
     - name: Enable site in apache config
-      file: src=/etc/apache2/sites-available/{{ item.site_name }} dest=/etc/apache2/sites-enabled/{{ item.site_name }} owner=root group=root state=link
-      with_items: vhost_sites
+      file: src=/etc/apache2/sites-available/{{ site_name }} dest=/etc/apache2/sites-enabled/{{ site_name }} owner=root group=root state=link
       notify:
         - reload apache

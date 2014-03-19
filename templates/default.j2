@@ -1,11 +1,11 @@
 <VirtualHost *:80>
 	ServerAdmin webmaster@localhost
-	DocumentRoot {{item.site_webroot}}
+	DocumentRoot {{site_webroot}}
 	<Directory />
 		Options FollowSymLinks
 		AllowOverride None
 	</Directory>
-	<Directory {{item.site_webroot}}>
+	<Directory {{site_webroot}}>
 		Options Indexes FollowSymLinks MultiViews
 		AllowOverride None
 		Order allow,deny

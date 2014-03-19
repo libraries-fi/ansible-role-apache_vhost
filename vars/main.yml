@@ -1,0 +1,4 @@
+---
+# Namespaced so it can be overridden in dependent role.
+apache_vhost_webroot: "{{sites_dir}}/{{site_name}}/www"
+apache_vhost_robots_txt: disallow_robots.txt.j2

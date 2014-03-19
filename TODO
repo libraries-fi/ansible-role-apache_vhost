@@ -1,0 +1,4 @@
+- robots.txt default disallow, using the default in a dependent role (unset var?)
+- maybe allow not having robots to support wp virtual robots, or maybe not as it does not seem that useful
+- rename to something without a dash (-)
+- make sure that DocumentRoot and Directory do not have trailing slashes as it is explicitly forbidden for DocumentRoot in apache docs.
