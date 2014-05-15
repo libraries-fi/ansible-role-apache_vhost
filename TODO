@@ -2,3 +2,4 @@
 - maybe allow not having robots to support wp virtual robots, or maybe not as it does not seem that useful
 - rename to something without a dash (-)
 - make sure that DocumentRoot and Directory do not have trailing slashes as it is explicitly forbidden for DocumentRoot in apache docs.
+- the security of not allowing anything explicitly allowed vs. basic auth using .htaccess is a problem so disabled for a while, this is in apache role and basic auth, actually
