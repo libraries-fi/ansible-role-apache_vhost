@@ -1,6 +1,6 @@
 <VirtualHost *:80>
         # Dummy servername to prevent apache from using the hostname of server.
-        ServerName default
+        ServerName {{apache_vhost_servername}}
 	ServerAdmin webmaster@localhost
 	DocumentRoot {{site_webroot}}
 
