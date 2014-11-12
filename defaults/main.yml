@@ -1,2 +1,14 @@
 APT_CACHE_VALID_TIME: 3600
+AVAHI_ALIASES_CONFIG_DIR: /etc/avahi/aliases.d
 apache_vhost_servername: default
+apache_vhost_robots_txt_dir: "{{sites_dir}}/robots"
+# workaround for ansible not exposing the roles_path variable
+roles_path: "{{role_path.rsplit('/', 1)|first}}"
+apache_vhost_robots_txt: "apache_vhost/templates/disallow_robots.txt.j2"
+apache_vhost_robots_txt_filename: "{{ apache_vhost_robots_txt|basename|replace('.j2','') }}"
+apache_vhost_avahi_alias: true
+apache_vhost_port: 80
+apache_vhost_server_admin_email: root@{{ansible_hostname}}
+# Namespaced so it can be overridden in dependent role.
+apache_vhost_webroot: "{{sites_dir}}/{{site_name}}/www"
+vhost_template: "apache_vhost/templates/default_vhost.j2"

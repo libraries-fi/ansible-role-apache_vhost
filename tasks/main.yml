@@ -1,19 +1,69 @@
 ---
+# TODO: other_sites need more complex data struct with no_www_redirect.
+
+
+- name: Set site name without test suffix for default host.
+  set_fact:
+    apache_vhost_site_name: "{{ site_name }}"
+  when: site_name == '000-default'
+
+- name: Add .local suffix to apache_vhost_site_name if needed.
+  set_fact:
+    apache_vhost_site_name: "{{ site_name ~ local_test_environment|default('') }}"
+  when: site_name != '000-default'
 
 - name: Install package apache2
-  action: apt pkg=apache2 state=present
+  apt:
+    pkg=apache2
+    state=present
 
 - name: Create site directory if it does not exist.
-  file: state=directory path={{ apache_vhost_webroot }} owner=root group=root mode=0755
+  file:
+    state=directory
+    path={{ apache_vhost_webroot }}
+    owner=root
+    group=root
+    mode=0755
+  when: apache_vhost_webroot is defined
+
+- name: Create robots.txt directory
+  file:
+    path={{ apache_vhost_robots_txt_dir }}
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+
+
 
 - name: Copy a robots.txt
-  template: src={{ apache_vhost_robots_txt }} dest={{ apache_vhost_webroot }}/robots.txt owner=root group=root mode=0644
-  when: robots_txt is defined
+  template:
+    src={{roles_path}}/{{ apache_vhost_robots_txt }}
+    dest={{ apache_vhost_robots_txt_dir }}/{{ apache_vhost_robots_txt_filename }}
+    owner=root
+    group=root
+    mode=0644
 
 - name: Apache config for site
-  template: src={{vhost_template}} dest=/etc/apache2/sites-available/{{site_name}} owner=root group=root mode=0644
+  template:
+    src={{roles_path}}/{{vhost_template}}
+    dest=/etc/apache2/sites-available/{{apache_vhost_site_name}}
+    owner=root
+    group=root
+    mode=0644
 
 - name: Enable site in apache config
-  file: src=/etc/apache2/sites-available/{{ site_name }} dest=/etc/apache2/sites-enabled/{{ site_name }} owner=root group=root state=link
+  file:
+    src=/etc/apache2/sites-available/{{ apache_vhost_site_name }}
+    dest=/etc/apache2/sites-enabled/{{ apache_vhost_site_name }}
+    owner=root
+    group=root
+    state=link
   notify:
     - reload apache
+
+- name: Install snippet for avahi config if in test environment.
+  template: src=avahi_aliases.j2 dest={{AVAHI_ALIASES_CONFIG_DIR}}/{{apache_vhost_site_name}}
+  when: local_test_environment is defined and apache_vhost_avahi_alias
+  notify:
+    - restart avahi-alias

@@ -1,2 +1,5 @@
 ---
 allow_duplicates: yes
+dependencies:
+  - role: avahi_aliases
+    when: local_test_environment is defined
