@@ -46,7 +46,7 @@
 
 - name: Apache config for site
   template:
-    src={{roles_path}}/{{vhost_template}}
+    src={{ apache_vhost_template_path }}/{{ vhost_template }}
     dest=/etc/apache2/sites-available/{{apache_vhost_site_name}}
     owner=root
     group=root
