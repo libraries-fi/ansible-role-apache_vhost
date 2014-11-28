@@ -24,7 +24,7 @@
     owner=root
     group=root
     mode=0755
-  when: apache_vhost_webroot is defined
+  when: apache_vhost_webroot is defined and apache_vhost_no_create_webroot is not defined
 
 - name: Create robots.txt directory
   file:
