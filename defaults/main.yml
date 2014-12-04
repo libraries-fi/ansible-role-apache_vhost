@@ -13,3 +13,6 @@ apache_vhost_server_admin_email: root@{{ansible_hostname}}
 apache_vhost_webroot: "{{sites_dir}}/{{site_name}}/www"
 vhost_template: "apache_vhost/templates/default_vhost.j2"
 apache_vhost_template_path: "{{ roles_path }}"
+apache_vhost_www_redirect_vhost:
+  hosts:
+    - "{{ site_name }}"

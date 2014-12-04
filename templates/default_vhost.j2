@@ -1,4 +1,5 @@
 # {{ ansible_managed }}
+{% import "macros.j2" as apache_macros with context %}
 <VirtualHost *:80>
 {% if no_www_redirect is defined %}
         ServerName {{ apache_vhost_site_name }}
@@ -25,27 +26,6 @@
                    allow from all
         </Directory>
 
-{% include 'apache_rewrites.j2' %}
-
+{{ apache_macros.rewrite_block(rewrites) }}
 </VirtualHost>
-
- {% if no_www_redirect is not defined or alternate_vhosts is defined %}
-#Permanently redirect root and all non-www subdomains and other domains.
-#Must be after main definition to not loop.
-<VirtualHost *:80>
-{% if no_www_redirect is not defined %}
-        ServerName {{ site_name }}
-{% endif %}
-{% if alternate_vhosts is defined %}
-{%    for vhost in alternate_vhosts %}
-{%        if no_www_redirect is defined and loop.first %}
-        ServerName {{ vhost }}
-        ServerAlias{%
-        elif loop.first %}
-        ServerAlias {{ vhost }}{% else %} {{vhost}}{% endif %}
-{%    endfor %}
-{% endif %}
-
-        RedirectPermanent / http://www.{{ site_name }}/
-</VirtualHost>
-{% endif %}
+{% include 'alternate_vhosts.j2' %}
