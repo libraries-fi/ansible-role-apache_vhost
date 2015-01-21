@@ -7,7 +7,6 @@ roles_path: "{{role_path.rsplit('/', 1)|first}}"
 apache_vhost_robots_txt: "apache_vhost/templates/disallow_robots.txt.j2"
 apache_vhost_robots_txt_filename: "{{ apache_vhost_robots_txt|basename|replace('.j2','') }}"
 apache_vhost_avahi_alias: true
-apache_vhost_port: 80
 apache_vhost_server_admin_email: root@{{ansible_hostname}}
 # Namespaced so it can be overridden in dependent role.
 apache_vhost_webroot: "{{sites_dir}}/{{site_name}}/www"
@@ -16,3 +15,8 @@ apache_vhost_template_path: "{{ roles_path }}"
 apache_vhost_www_redirect_vhost:
   hosts:
     - "{{ site_name }}"
+apache_vhost_port: "80"
+apache_vhost_ssl_key: "{{apache_vhost_ssl_certificate_common_name|default('')}}.key"
+apache_vhost_ssl_bundle:  "{{apache_vhost_ssl_certificate_common_name|default('')}}.bundle.crt"
+apache_vhost_ssl_certificate: "{{apache_vhost_ssl_certificate_common_name|default('')}}.crt"
+apache_ssl_certificate_dir: /etc/apache2/ssl
