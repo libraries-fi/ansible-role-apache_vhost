@@ -57,9 +57,6 @@
   stat: path=/etc/apache2/sites-available/{{apache_vhost_site_name}}
   register: site_config
 
-- name: Print statements during execution
-  debug: var=site_config
-
 
 - name: Enable site in apache config
   file:
