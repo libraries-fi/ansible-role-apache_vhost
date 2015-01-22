@@ -10,12 +10,6 @@
 {% else %}
         ServerName www.{{ apache_vhost_site_name }}
 {% endif %}
-{% if apache_vhost_ssl_certificate_common_name is defined %}
-    SSLEngine on
-    SSLCertificateFile  {{ apache_ssl_certificate_dir }}/{{ apache_vhost_ssl_certificate }}
-    SSLCertificateKeyFile {{ apache_ssl_certificate_dir }}/{{ apache_vhost_ssl_key }}
-    SSLCertificateChainFile {{ apache_ssl_certificate_dir }}/{{ apache_vhost_ssl_bundle }}
-{% endif %}
 {% if apache_vhost_other_sites is defined %}
 {%    for site in apache_vhost_other_sites %}
 {% if local_test_environment is defined %}
@@ -26,6 +20,12 @@
 {%    endfor %}
 {% endif %}
 
+{% if apache_vhost_ssl_certificate_common_name is defined %}
+    SSLEngine on
+    SSLCertificateFile  {{ apache_ssl_certificate_dir }}/{{ apache_vhost_ssl_certificate }}
+    SSLCertificateKeyFile {{ apache_ssl_certificate_dir }}/{{ apache_vhost_ssl_key }}
+    SSLCertificateChainFile {{ apache_ssl_certificate_dir }}/{{ apache_vhost_ssl_bundle }}
+{% endif %}
         Alias /robots.txt {{apache_vhost_robots_txt_dir}}/{{apache_vhost_robots_txt_filename}}
         ServerAdmin {{apache_vhost_server_admin_email}}
         DocumentRoot {{apache_vhost_webroot}}
