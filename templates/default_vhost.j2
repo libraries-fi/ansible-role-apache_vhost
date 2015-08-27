@@ -31,8 +31,8 @@
         DocumentRoot {{apache_vhost_webroot}}
 
         <Directory {{apache_vhost_webroot}}>
-                   Options Indexes FollowSymLinks MultiViews
-                   AllowOverride All
+                   Options Indexes FollowSymLinks
+                   AllowOverride {{apache_vhost_allowoverride}}
                    Order allow,deny
                    allow from all
         </Directory>

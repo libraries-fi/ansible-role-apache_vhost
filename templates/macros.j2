@@ -1,6 +1,6 @@
 {# {% import "macros.j2" as apache_macros with context %} #}
 {% macro rewrite_block(rewrites) %}
-{% if rewrites is defined %}
+{% if rewrites %}
 # Various rewrite rules.
 <IfModule mod_rewrite.c>
   RewriteEngine on
@@ -20,8 +20,6 @@
             ServerAlias{% endif %}{%
             else %} {{ hostname }}{% endif %}
 {%        endfor %}
-{{ rewrite_block(vhost.rewrites) }}
-
         RedirectPermanent / http://www.{{ site_name }}/{{ vhost.destination_path|default('') }}
 </VirtualHost>
 {% endmacro %}
