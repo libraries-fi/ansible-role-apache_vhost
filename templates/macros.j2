@@ -11,15 +11,22 @@
 {% endif %}
 {% endmacro %}
 
-{% macro redirect_vhost(vhost) %}
-<VirtualHost *:80>
-{%        for hostname in vhost.hosts %}
+{% macro vhost_hostnames(hosts) %}
+{%        for hostname in hosts %}
+{% if local_test_environment is defined %}
+{% set hostname = hostname ~ ".local" %}
+{% endif %}
 {%            if loop.first %}
             ServerName {{ hostname }}
 {% if loop.length > 1 %}
             ServerAlias{% endif %}{%
             else %} {{ hostname }}{% endif %}
 {%        endfor %}
+{% endmacro %}
+
+{% macro redirect_vhost(vhost) %}
+<VirtualHost *:80>
+{{ vhost_hostnames(vhost.hosts) }}
         RedirectPermanent / http://www.{{ site_name }}/{{ vhost.destination_path|default('') }}
 </VirtualHost>
 {% endmacro %}

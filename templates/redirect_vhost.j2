@@ -1,0 +1,14 @@
+{% import "macros.j2" as apache_macros with context %}
+# {{ ansible_managed }}
+<VirtualHost *:80>
+{{ apache_macros.vhost_hostnames(apache_vhost_names) }}
+        ServerAdmin {{server_admin_email}}
+
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+{%    for protocol, proto_cond in [('http', '!^on'),('https','^on')] %}
+  RewriteCond %{HTTPS} {{proto_cond}}
+  RewriteRule ^.* {{protocol}}://%1{{redirect_destination}} [R=301,L] #removed double slash
+{% endfor %}
+</IfModule>
+</VirtualHost>
