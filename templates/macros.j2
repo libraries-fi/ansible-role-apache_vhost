@@ -25,7 +25,11 @@
 {% endmacro %}
 
 {% macro redirect_vhost(vhost) %}
-<VirtualHost *:80>
+{% if apache_vhost_definition is not defined %}
+<VirtualHost *:{{apache_vhost_port}}>
+{% else %}
+<VirtualHost {{ apache_vhost_definition }}>
+{% endif %}
 {{ vhost_hostnames(vhost.hosts) }}
         RedirectPermanent / http://www.{{ site_name }}/{{ vhost.destination_path|default('') }}
 </VirtualHost>
