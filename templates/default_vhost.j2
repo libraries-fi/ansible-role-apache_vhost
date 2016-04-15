@@ -30,6 +30,9 @@
         ServerAdmin {{apache_vhost_server_admin_email}}
         DocumentRoot {{apache_vhost_webroot}}
 
+{% if apache_vhost_behind_reverse_proxy %}
+        SetEnvIf X_FORWARDED_PROTO https HTTPS=on
+{% endif %}
         <Directory {{apache_vhost_webroot}}>
                    Options Indexes FollowSymLinks
                    AllowOverride {{apache_vhost_allowoverride}}

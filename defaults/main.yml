@@ -21,4 +21,5 @@ apache_vhost_ssl_bundle:  "{{apache_vhost_ssl_certificate_common_name|default(''
 apache_vhost_ssl_certificate: "{{apache_vhost_ssl_certificate_common_name|default('')}}.crt"
 apache_ssl_certificate_dir: /etc/apache2/ssl
 apache_vhost_allowoverride: All
+apache_vhost_behind_reverse_proxy: False
 rewrites: ''
