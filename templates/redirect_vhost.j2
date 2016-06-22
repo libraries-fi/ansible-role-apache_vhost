@@ -8,7 +8,7 @@
   RewriteEngine on
 {%    for protocol, proto_cond in [('http', '!^on'),('https','^on')] %}
   RewriteCond %{HTTPS} {{proto_cond}}
-  RewriteRule ^.* {{protocol}}://%1{{redirect_destination}} [R=301,L] #removed double slash
+  RewriteRule ^.* {{protocol}}://{{redirect_destination}} [R=301,L] #removed double slash
 {% endfor %}
 </IfModule>
 </VirtualHost>
