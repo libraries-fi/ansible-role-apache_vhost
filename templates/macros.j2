@@ -1,12 +1,12 @@
 {# {% import "macros.j2" as apache_macros with context %} #}
 {% macro rewrite_block(rewrites) %}
 {% if rewrites %}
-# Various rewrite rules.
-<IfModule mod_rewrite.c>
-  RewriteEngine on
-{% for rewrite in rewrites %}
-{{rewrite}}
-{% endfor %}
+    # Various rewrite rules.
+    <IfModule mod_rewrite.c>
+        RewriteEngine on
+    {% for rewrite in rewrites %}
+    {{rewrite}}
+    {% endfor %}
 </IfModule>
 {% endif %}
 {% endmacro %}
@@ -17,9 +17,9 @@
 {% set hostname = hostname ~ ".local" %}
 {% endif %}
 {%            if loop.first %}
-            ServerName {{ hostname }}
+ServerName {{ hostname }}
 {% if loop.length > 1 %}
-            ServerAlias{% endif %}{%
+    ServerAlias{% endif %}{%
             else %} {{ hostname }}{% endif %}
 {%        endfor %}
 {% endmacro %}
@@ -30,7 +30,7 @@
 {% else %}
 <VirtualHost {{ apache_vhost_definition }}>
 {% endif %}
-{{ vhost_hostnames(vhost.hosts) }}
-        RedirectPermanent / http://www.{{ site_name }}/{{ vhost.destination_path|default('') }}
+    {{ vhost_hostnames(vhost.hosts) }}
+    RedirectPermanent / http://www.{{ site_name }}/{{ vhost.destination_path|default('') }}
 </VirtualHost>
 {% endmacro %}
