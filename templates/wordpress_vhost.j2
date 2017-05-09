@@ -30,7 +30,7 @@
             RewriteCond %{REQUEST_FILENAME} -f [OR]
             RewriteCond %{REQUEST_FILENAME} -d
             RewriteRule ^ - [L]
-{% if synced_wordpress_bedrock is defined %}
+{% if wordpress_bedrock is defined %}
             RewriteRule ^(wp-(content|admin|includes).*) wp/$1 [L]
             RewriteRule ^(.*\.php)$ wp/$1 [L]
 {% else %}
