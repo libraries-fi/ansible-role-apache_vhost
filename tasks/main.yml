@@ -34,8 +34,6 @@
     group=root
     mode=0755
 
-
-
 - name: Copy a robots.txt
   template:
     src={{roles_path}}/{{ apache_vhost_robots_txt }}
@@ -43,6 +41,13 @@
     owner=root
     group=root
     mode=0644
+
+- name: Set other_vhosts_access_log to use syslog.
+  lineinfile:
+    path: /etc/apache2/conf.d/other-vhosts-access-log
+    regexp: "^CustomLog"
+    line: 'CustomLog "| /usr/bin/logger -thttpd -plocal6.notice" vhosts_combined'
+  when: apache_vhost_log_to_syslog == true
 
 - name: Apache config for site
   template:
