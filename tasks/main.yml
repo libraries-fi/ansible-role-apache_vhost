@@ -43,9 +43,9 @@
     mode=0644
 
 - name: Set other_vhosts_access_log to use syslog.
-  lineinline:
+  lineinfile:
     path: /etc/apache2/conf.d/other-vhosts-access-log
-    regex: "^CustomLog"
+    regexp: "^CustomLog"
     line: 'CustomLog "| /usr/bin/logger -thttpd -plocal6.notice" vhosts_combined'
   when: apache_vhost_log_to_syslog == true
 
