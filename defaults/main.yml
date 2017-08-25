@@ -22,5 +22,4 @@ apache_vhost_ssl_certificate: "{{apache_vhost_ssl_certificate_common_name|defaul
 apache_ssl_certificate_dir: /etc/apache2/ssl
 apache_vhost_allowoverride: All
 apache_vhost_behind_reverse_proxy: False
-apache_vhost_log_to_syslog: False
 rewrites: ''
