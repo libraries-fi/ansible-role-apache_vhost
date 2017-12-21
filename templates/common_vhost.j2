@@ -32,4 +32,11 @@
 {% if apache_vhost_behind_reverse_proxy %}
     SetEnvIf X_FORWARDED_PROTO https HTTPS=on
 {% endif %}
+{% if apache_vhost_redirect_to_https is defined %}
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteCond %{HTTPS} off
+        RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+    </IfModule>
+{% endif %}
 {{ apache_macros.rewrite_block(rewrites) }}
