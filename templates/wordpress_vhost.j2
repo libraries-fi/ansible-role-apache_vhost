@@ -12,6 +12,11 @@
         AllowOverride {{apache_vhost_allowoverride}}
         Order allow,deny
         allow from all
+{% if wordfence_waf_path is defined %}
+        <IfModule mod_php7.c>
+            php_value auto_prepend_file {{ wordfence_waf_path }}
+        </IfModule>
+{% endif %}
 {% if wordpress_webroot is defined and other_sites == [] %}
         <IfModule mod_rewrite.c>
             RewriteEngine On
