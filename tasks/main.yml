@@ -68,9 +68,3 @@
   when: site_config.stat.exists
   notify:
     - reload apache
-
-- name: Install snippet for avahi config if in test environment.
-  template: src=avahi_aliases.j2 dest={{AVAHI_ALIASES_CONFIG_DIR}}/{{apache_vhost_site_name}}
-  when: local_test_environment is defined and apache_vhost_avahi_alias
-  notify:
-    - restart avahi-alias
