@@ -1,5 +1,2 @@
 ---
 allow_duplicates: yes
-dependencies:
-  - role: ajsalminen.avahi_aliases
-    when: local_test_environment is defined
