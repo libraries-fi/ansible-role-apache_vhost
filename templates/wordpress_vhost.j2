@@ -13,7 +13,7 @@
         Order allow,deny
         allow from all
 {% if wordfence_waf_path is defined %}
-        <IfModule mod_php7.c>
+        <IfModule mod_php.c>
             php_value auto_prepend_file {{ wordfence_waf_path }}
         </IfModule>
 {% endif %}
